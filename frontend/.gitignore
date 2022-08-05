@@ -12,6 +12,7 @@
 # /build
 
 /src
+/public
 
 # misc
 .DS_Store
@@ -25,6 +26,4 @@ yarn-debug.log*
 yarn-error.log*
 
 webpack.config.js
-package.json
-package-lock.json
 babel.config.js
