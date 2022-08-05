@@ -5,15 +5,15 @@ const { default: mongoose } = require('mongoose');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-// const cors = require('cors');
-const { cors } = require('./utils/cors');
+const cors = require('cors');
+// const { cors } = require('./utils/cors');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
 const loginRouter = require('./routes/login');
 const NotFoundError = require('./errors/not-found-error');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-// const { allowedUrls } = require('./utils/allowedUrls');
+const { allowedUrls } = require('./utils/allowedUrls');
 
 const { PORT = 3000 } = process.env;
 
@@ -23,12 +23,16 @@ async function mongoInit() {
   await mongoose.connect('mongodb://localhost:27017/mestodb');
 }
 
-// app.use(cors({
-//   origin: allowedUrls,
-//   credentials: true,
-// }));
-
-app.use(cors);
+app.use(cors({
+  origin(origin, callback) {
+    if (allowedUrls.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
 
 mongoInit().catch((err) => console.log(err));
 
