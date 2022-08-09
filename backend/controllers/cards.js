@@ -15,7 +15,7 @@ module.exports.createCard = (req, res, next) => {
     owner: req.user._id,
   })
     .then((newCard) => {
-      res.send({ card: newCard });
+      res.send(newCard);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -31,7 +31,7 @@ module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate('owner')
     .then((cards) => {
-      res.send({ cardList: cards });
+      res.send(cards);
     })
     .catch(next);
 };
@@ -68,7 +68,6 @@ module.exports.setLike = (req, res, next) => {
       if (!newCard) {
         throw new NotFoundError('Передан несуществующий _id карточки');
       }
-
       res.send(newCard);
     })
     .catch(next);
