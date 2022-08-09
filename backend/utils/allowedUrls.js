@@ -11,4 +11,5 @@ module.exports.allowedUrls = [
   'https://api.mesto.edu.nomoredomains.xyz/users',
   'https://api.mesto.edu.nomoredomains.xyz/cards',
   'https://api.mesto.edu.nomoredomains.xyz/users/me',
+  undefined,
 ];
